@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:annotation>
+        <xsd:documentation>
+            XML implementation for X3P masks and color annotations.  This could be 
+            included within ISO5436's Record3 as a Mask element or in a "mask.xml" file in 
+            the X3P's root directory. 
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element name="Mask">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Link" type="xsd:token" maxOccurs="1" minOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            A URI pointing to a png or jpeg file containing a mask.  The linked
+                            file must have the same X and Y dimensions as in the X3P's main.xml file.
+                            Typically, the image file will be located in the bindata folder
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+
+                <xsd:element name="Annotations" maxOccurs="1" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            An optional sequence of Annotation elements which represent a color to label key-value pair.
+                        </xsd:documentation>
+                    </xsd:annotation>
+
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Annotation" maxOccurs="unbounded"></xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+
+                    <xsd:unique name="UniqueAnnotationColor">
+                        <xsd:selector xpath="Annotation" />
+                        <xsd:field xpath="@color" />
+                    </xsd:unique>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
